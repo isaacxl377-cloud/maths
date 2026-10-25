@@ -1,0 +1,1443 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>八上数学第13章《三角形中的边角关系、命题与证明》定理定义选择题复习</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+    :root {
+      --primary: #2563eb;
+      --primary-light: #eff6ff;
+      --primary-dark: #1d4ed8;
+      --success: #16a34a;
+      --success-light: #dcfce7;
+      --danger: #dc2626;
+      --danger-light: #fee2e2;
+      --warning: #d97706;
+      --warning-light: #fef3c7;
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+    }
+    html, body {
+      height: 100dvh;
+      max-height: 100dvh;
+      width: 100vw;
+      overflow: hidden;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+      background: var(--bg);
+      color: var(--text-main);
+    }
+    #app {
+      height: 100dvh;
+      max-height: 100dvh;
+      width: 100%;
+      max-width: 680px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    /* 视图基础 - 严格单屏控制 */
+    .view {
+      display: none;
+      height: 100%;
+      width: 100%;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: env(safe-area-inset-top, 10px) 14px env(safe-area-inset-bottom, 10px) 14px;
+    }
+    .view.active {
+      display: flex;
+    }
+
+    /* 顶部导航条 */
+    .header-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 4px 0;
+      border-bottom: 1px solid var(--border);
+      min-height: 36px;
+      flex-shrink: 0;
+    }
+    .back-btn {
+      background: none;
+      border: none;
+      font-size: 13.5px;
+      color: var(--primary);
+      cursor: pointer;
+      font-weight: 600;
+      padding: 3px 6px;
+      border-radius: 6px;
+    }
+    .back-btn:hover {
+      background: var(--primary-light);
+    }
+    .page-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+
+    /* 首页样式 */
+    .home-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 0 6px;
+      min-height: 0;
+    }
+    .badge {
+      display: inline-block;
+      padding: 4px 12px;
+      background: var(--primary-light);
+      color: var(--primary);
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+    .home-title {
+      font-size: 22px;
+      font-weight: 800;
+      color: #1e293b;
+      margin-bottom: 8px;
+      line-height: 1.3;
+    }
+    .home-desc {
+      font-size: 12.5px;
+      color: var(--text-muted);
+      line-height: 1.5;
+      margin-bottom: 14px;
+    }
+    .knowledge-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      width: 100%;
+      margin-bottom: 16px;
+      text-align: left;
+    }
+    .k-card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 8px 10px;
+    }
+    .k-title {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 2px;
+    }
+    .k-sub {
+      font-size: 11px;
+      color: var(--text-muted);
+      line-height: 1.35;
+    }
+    .stat-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 12px;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      font-size: 11.5px;
+      color: #475569;
+      margin-bottom: 18px;
+    }
+    .home-actions {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+
+    /* 进度条 */
+    .progress-bar-wrap {
+      width: 100%;
+      height: 4px;
+      background: #e2e8f0;
+      border-radius: 2px;
+      overflow: hidden;
+      margin-top: 3px;
+      flex-shrink: 0;
+    }
+    .progress-bar-fill {
+      height: 100%;
+      background: var(--primary);
+      width: 0%;
+      transition: width 0.2s ease;
+    }
+
+    /* 答题区核心卡片 - 严格一屏紧凑布局，免滚动 */
+    .quiz-card {
+      flex: 1;
+      background: var(--card-bg);
+      border-radius: 14px;
+      padding: 12px 14px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      margin: 6px 0;
+      border: 1px solid var(--border);
+      box-shadow: 0 3px 12px -2px rgba(0, 0, 0, 0.05);
+      min-height: 0;
+      overflow: hidden;
+    }
+    .meta-tags {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 6px;
+      flex-shrink: 0;
+    }
+    .meta-tag-group {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .meta-tag {
+      font-size: 11px;
+      background: #f1f5f9;
+      color: #475569;
+      padding: 2px 7px;
+      border-radius: 4px;
+      font-weight: 600;
+    }
+    .meta-tag.type-tag {
+      background: var(--primary-light);
+      color: var(--primary);
+    }
+    .meta-source {
+      font-size: 11px;
+      color: #94a3b8;
+    }
+
+    .question-box {
+      margin-bottom: 6px;
+      flex-shrink: 0;
+    }
+    .question-text {
+      font-size: 14.5px;
+      line-height: 1.45;
+      color: #1e293b;
+      font-weight: 600;
+    }
+    .blank-highlight {
+      color: var(--primary);
+      font-weight: 700;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    /* 选项列表 */
+    .options-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+    .option-item {
+      padding: 8px 12px;
+      border: 1.5px solid var(--border);
+      border-radius: 9px;
+      font-size: 13.5px;
+      line-height: 1.3;
+      color: #334155;
+      background: #fff;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: all 0.15s ease;
+      touch-action: manipulation;
+      user-select: none;
+    }
+    .option-item:hover:not(.locked) {
+      border-color: #93c5fd;
+      background: #f8fafc;
+    }
+    .option-item:active:not(.locked) {
+      background: var(--primary-light);
+      border-color: var(--primary);
+    }
+    .option-item.correct-reveal {
+      border-color: var(--success) !important;
+      background: var(--success-light) !important;
+      color: #166534 !important;
+      font-weight: 700;
+    }
+    .option-item.wrong-selected {
+      border-color: var(--danger) !important;
+      background: var(--danger-light) !important;
+      color: #991b1b !important;
+      font-weight: 700;
+    }
+
+    /* 反馈判定区 + 下一题控制栏 */
+    .feedback-box {
+      margin-top: 6px;
+      padding: 8px 11px;
+      border-radius: 9px;
+      font-size: 12px;
+      display: none;
+      flex-direction: column;
+      line-height: 1.38;
+      animation: fadeIn 0.15s ease-in-out;
+      flex-shrink: 0;
+    }
+    .feedback-box.correct {
+      display: flex;
+      background: var(--success-light);
+      color: #166534;
+      border: 1px solid #bbf7d0;
+    }
+    .feedback-box.wrong {
+      display: flex;
+      background: var(--danger-light);
+      color: #991b1b;
+      border: 1px solid #fecaca;
+    }
+    .feedback-header {
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 4px;
+      font-size: 12.5px;
+    }
+    .explain-text {
+      margin-top: 3px;
+      color: #1e293b;
+      font-size: 11.5px;
+    }
+    .feedback-actions {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 5px;
+      padding-top: 4px;
+      border-top: 1px dashed rgba(0,0,0,0.1);
+    }
+    .next-tip {
+      font-size: 11px;
+      font-weight: 500;
+      opacity: 0.85;
+    }
+    .next-inline-btn {
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      padding: 3px 10px;
+      font-size: 11.5px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    /* 底部快速导航栏 */
+    .quiz-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      padding-top: 2px;
+      flex-shrink: 0;
+    }
+    .nav-mini-btn {
+      background: #fff;
+      border: 1px solid var(--border);
+      color: #475569;
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .nav-mini-btn:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+
+    /* 结算页面 */
+    .summary-card {
+      flex: 1;
+      background: #fff;
+      border-radius: 16px;
+      padding: 16px 14px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      border: 1px solid var(--border);
+      margin: 8px 0;
+      min-height: 0;
+    }
+    .score-circle {
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      background: var(--primary-light);
+      border: 4px solid var(--primary);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 12px;
+    }
+    .score-num {
+      font-size: 24px;
+      font-weight: 800;
+      color: var(--primary);
+      line-height: 1;
+    }
+    .score-label {
+      font-size: 10.5px;
+      color: var(--text-muted);
+      margin-top: 3px;
+    }
+    .stats-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      width: 100%;
+      margin-bottom: 12px;
+    }
+    .stat-item {
+      background: #f8fafc;
+      padding: 8px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+    }
+    .stat-val {
+      font-size: 16px;
+      font-weight: 700;
+      color: #1e293b;
+    }
+    .stat-name {
+      font-size: 10.5px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .btn {
+      width: 100%;
+      height: 42px;
+      border-radius: 10px;
+      font-size: 14.5px;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.15s ease;
+      touch-action: manipulation;
+    }
+    .btn-primary {
+      background: var(--primary);
+      color: #fff;
+    }
+    .btn-primary:active {
+      background: var(--primary-dark);
+      transform: scale(0.99);
+    }
+    .btn-danger {
+      background: var(--danger);
+      color: #fff;
+      box-shadow: 0 4px 10px rgba(220, 38, 38, 0.2);
+    }
+    .btn-danger:active {
+      background: #b91c1c;
+      transform: scale(0.99);
+    }
+    .btn-secondary {
+      background: #f1f5f9;
+      color: #334155;
+      border: 1px solid var(--border);
+    }
+    .btn-secondary:active {
+      background: #e2e8f0;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(2px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+<div id="app">
+  <!-- 首页 -->
+  <div id="view-home" class="view active">
+    <div class="header-bar">
+      <div style="font-weight:700; color:var(--primary); font-size:14px;">📐 沪科版八上数学 · 第13章</div>
+      <div id="wrong-count-header" class="page-title">错题库: 0 题</div>
+    </div>
+    <div class="home-content">
+      <span class="badge">2022课标修订版 · 定理定义推论专项</span>
+      <h1 class="home-title">第13章 三角形中的边角关系、<br>命题与证明</h1>
+      <p class="home-desc">提取全章所有定义、性质、定理、推论重点字词挖空<br>单题单屏免滚动 · 点击选项即刻判题并显示解析</p>
+      
+      <div class="knowledge-grid">
+        <div class="k-card">
+          <div class="k-title">13.1 边角关系与重要线段</div>
+          <div class="k-sub">三角形定义与分类、三边关系性质、内角和、高线/角平分线/中线与重心 (第1~18题)</div>
+        </div>
+        <div class="k-card">
+          <div class="k-title">13.2 命题与证明及推论</div>
+          <div class="k-sub">定义与命题、互逆命题与反例、定理与演绎推理、内角和定理及4个推论、外角和 (第19~32题)</div>
+        </div>
+      </div>
+
+      <div class="stat-pill">
+        <span>⚡ 点击选项自动显示解析</span>
+        <span>•</span>
+        <span>🎯 订正后错题按钮自动消失</span>
+      </div>
+
+      <div class="home-actions">
+        <button id="btn-start-all" class="btn btn-primary" onclick="startQuiz('all')">开始全章复习 (共32题)</button>
+        <!-- 当有错题时自动显示，无错题或全部订正后自动隐藏消失 -->
+        <button id="btn-review-wrong" class="btn btn-danger" style="display: none;" onclick="startQuiz('wrong')">📕 错题复习 (0题)</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 答题页 (一题一屏，无需向下滑动) -->
+  <div id="view-quiz" class="view">
+    <div class="header-bar">
+      <button class="back-btn" onclick="exitToHome(event)">← 返回首页</button>
+      <div id="quiz-progress-text" class="page-title">第 1 / 32 题</div>
+      <div id="quiz-mode-tag" class="meta-tag" style="background:var(--primary-light); color:var(--primary);">全章复习</div>
+    </div>
+    <div class="progress-bar-wrap">
+      <div id="progress-bar-fill" class="progress-bar-fill"></div>
+    </div>
+
+    <div class="quiz-card">
+      <div>
+        <div class="meta-tags">
+          <div class="meta-tag-group">
+            <span id="quiz-type-tag" class="meta-tag type-tag">定义</span>
+            <span id="quiz-chapter-tag" class="meta-tag">13.1 三角形中的边角关系</span>
+          </div>
+          <span id="quiz-page-source" class="meta-source">教材P64</span>
+        </div>
+
+        <div class="question-box">
+          <p id="question-text" class="question-text"></p>
+        </div>
+      </div>
+
+      <div>
+        <div id="options-group" class="options-group">
+          <!-- 选项由 JS 动态生成 -->
+        </div>
+
+        <div id="feedback-box" class="feedback-box">
+          <div id="feedback-header" class="feedback-header"></div>
+          <div id="explain-text" class="explain-text"></div>
+          <div class="feedback-actions">
+            <span id="wrong-book-tip" class="next-tip"></span>
+            <button id="btn-next-inline" class="next-inline-btn" onclick="goToNext(event)">下一题 ➔</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="quiz-footer">
+      <button id="btn-prev-q" class="nav-mini-btn" onclick="goToPrev(event)">上一题</button>
+      <span id="footer-hint" style="font-size:11.5px; color:var(--text-muted);">点击选项直接判题 · 支持键盘 A/B/C/D</span>
+      <button id="btn-next-q" class="nav-mini-btn" onclick="goToNext(event)">下一题</button>
+    </div>
+  </div>
+
+  <!-- 结算页 -->
+  <div id="view-summary" class="view">
+    <div class="header-bar">
+      <div class="page-title" style="margin: 0 auto;">本次复习完成报告</div>
+    </div>
+    <div class="summary-card">
+      <div class="score-circle">
+        <div id="summary-rate" class="score-num">100%</div>
+        <div class="score-label">正确率</div>
+      </div>
+      <div id="summary-msg" style="font-size:14px; font-weight:700; color:#1e293b; margin-bottom:12px;">表现出色！</div>
+      <div class="stats-grid">
+        <div class="stat-item">
+          <div id="summary-total" class="stat-val">32</div>
+          <div class="stat-name">本次总题数</div>
+        </div>
+        <div class="stat-item">
+          <div id="summary-correct" class="stat-val" style="color:var(--success);">32</div>
+          <div class="stat-name">答对题数</div>
+        </div>
+        <div class="stat-item">
+          <div id="summary-wrong" class="stat-val" style="color:var(--danger);">0</div>
+          <div class="stat-name">答错题数</div>
+        </div>
+        <div class="stat-item">
+          <div id="summary-remaining-wrong" class="stat-val">0</div>
+          <div class="stat-name">待订正错题</div>
+        </div>
+      </div>
+    </div>
+    <div style="display:flex; flex-direction:column; gap:8px; flex-shrink:0;">
+      <!-- 结算页的错题复习按钮同样遵循：有错题才显示，订正完自动消失 -->
+      <button id="btn-summary-wrong" class="btn btn-danger" style="display: none;" onclick="startQuiz('wrong')">📕 立即订正错题</button>
+      <button class="btn btn-primary" onclick="exitToHome(event)">返回首页</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const QUESTION_DATABASE = [
+  {
+    "id": 1,
+    "page": 64,
+    "chapter": "13.1 三角形中的边角关系",
+    "section": "三角形的定义（挖空1）",
+    "type": "定义",
+    "question": "由不在（　　）上的三条线段首尾依次相接所组成的封闭图形叫作三角形。",
+    "options": [
+      "A. 同一个平面",
+      "B. 同一条直线",
+      "C. 同一个圆",
+      "D. 同一条射线"
+    ],
+    "answer": "B",
+    "correct_text": "同一条直线",
+    "explain": "【教材P64定义】由不在同一条直线上的三条线段首尾依次相接所组成的封闭图形叫作三角形。若三点在同一直线上则无法围成三角形。"
+  },
+  {
+    "id": 2,
+    "page": 64,
+    "chapter": "13.1 三角形中的边角关系",
+    "section": "三角形的定义（挖空2）",
+    "type": "定义",
+    "question": "由不在同一条直线上的三条线段（　　）所组成的封闭图形叫作三角形。",
+    "options": [
+      "A. 任意相交",
+      "B. 互相平行",
+      "C. 首尾依次相接",
+      "D. 端点重合于一点"
+    ],
+    "answer": "C",
+    "correct_text": "首尾依次相接",
+    "explain": "【教材P64定义】由不在同一条直线上的三条线段首尾依次相接所组成的封闭图形叫作三角形。"
+  },
+  {
+    "id": 3,
+    "page": 64,
+    "chapter": "13.1 三角形中的边角关系",
+    "section": "三角形按边分类（挖空1）",
+    "type": "定义",
+    "question": "三角形中，三条边（　　）的三角形叫作不等边三角形。",
+    "options": [
+      "A. 互不相等",
+      "B. 不全相等",
+      "C. 至少有两条不相等",
+      "D. 都相等"
+    ],
+    "answer": "A",
+    "correct_text": "互不相等",
+    "explain": "【教材P64定义】三角形中，三条边互不相等的三角形叫作不等边三角形。"
+  },
+  {
+    "id": 4,
+    "page": 64,
+    "chapter": "13.1 三角形中的边角关系",
+    "section": "三角形按边分类（挖空2）",
+    "type": "定义",
+    "question": "三角形中，有两条边相等的三角形叫作（　　）；三条边都相等的三角形叫作等边三角形，又叫作（　　）。",
+    "options": [
+      "A. 等腰三角形；直角三角形",
+      "B. 等腰三角形；正三角形",
+      "C. 正三角形；等腰三角形",
+      "D. 锐角三角形；正三角形"
+    ],
+    "answer": "B",
+    "correct_text": "等腰三角形；正三角形",
+    "explain": "【教材P64定义】有两条边相等的三角形叫作等腰三角形，三条边都相等的三角形叫作等边三角形，又叫作正三角形。"
+  },
+  {
+    "id": 5,
+    "page": 64,
+    "chapter": "13.1 三角形中的边角关系",
+    "section": "等腰三角形的要素（挖空1）",
+    "type": "定义",
+    "question": "在等腰三角形中，相等的两边叫作（　　），剩余的一边叫作（　　）。",
+    "options": [
+      "A. 直角边；斜边",
+      "B. 邻边；对边",
+      "C. 腰；底边",
+      "D. 底边；腰"
+    ],
+    "answer": "C",
+    "correct_text": "腰；底边",
+    "explain": "【教材P64定义】在等腰三角形中，相等的两边叫作腰，剩余的一边叫作底边。"
+  },
+  {
+    "id": 6,
+    "page": 64,
+    "chapter": "13.1 三角形中的边角关系",
+    "section": "等腰三角形的要素（挖空2）",
+    "type": "定义",
+    "question": "在等腰三角形中，两腰的夹角叫作（　　），腰与底边的夹角叫作（　　）。",
+    "options": [
+      "A. 顶角；底角",
+      "B. 底角；顶角",
+      "C. 内角；外角",
+      "D. 对角；邻角"
+    ],
+    "answer": "A",
+    "correct_text": "顶角；底角",
+    "explain": "【教材P64定义】在等腰三角形中，两腰的夹角叫作顶角，腰与底边的夹角叫作底角。"
+  },
+  {
+    "id": 7,
+    "page": 64,
+    "chapter": "13.1 三角形中的边角关系",
+    "section": "等边与等腰三角形的关系",
+    "type": "定义",
+    "question": "等边三角形是特殊的（　　），即（　　）和腰相等的等腰三角形。",
+    "options": [
+      "A. 锐角三角形；高线",
+      "B. 不等边三角形；底边",
+      "C. 等腰三角形；底边",
+      "D. 直角三角形；斜边"
+    ],
+    "answer": "C",
+    "correct_text": "等腰三角形；底边",
+    "explain": "【教材P64概念】等边三角形是特殊的等腰三角形，即底边和腰相等的等腰三角形。按边分类时，等腰三角形包含“底边和腰不相等的等腰三角形”与“等边三角形”。"
+  },
+  {
+    "id": 8,
+    "page": 65,
+    "chapter": "13.1 三角形中的边角关系",
+    "section": "三角形三边关系定理（挖空1）",
+    "type": "性质定理",
+    "question": "一般地，三角形中任意两边的（　　）大于第三边。",
+    "options": [
+      "A. 差",
+      "B. 和",
+      "C. 积",
+      "D. 平方和"
+    ],
+    "answer": "B",
+    "correct_text": "和",
+    "explain": "【教材P65性质】由“两点之间的所有连线中，线段最短”可得：三角形中任意两边的和大于第三边。"
+  },
+  {
+    "id": 9,
+    "page": 65,
+    "chapter": "13.1 三角形中的边角关系",
+    "section": "三角形三边关系定理（挖空2）",
+    "type": "性质定理",
+    "question": "根据不等式性质，可以得到三角形中任意两边的差（　　）第三边。",
+    "options": [
+      "A. 大于",
+      "B. 小于",
+      "C. 等于",
+      "D. 不小于"
+    ],
+    "answer": "B",
+    "correct_text": "小于",
+    "explain": "【教材P65性质】一般地，三角形中任意两边的和大于第三边；根据不等式性质，可以得到三角形中任意两边的差小于第三边。"
+  },
+  {
+    "id": 10,
+    "page": 67,
+    "chapter": "13.1 三角形中的边角关系",
+    "section": "三角形按角分类（挖空1）",
+    "type": "定义",
+    "question": "三角形中，（　　）都是锐角的三角形叫作锐角三角形。",
+    "options": [
+      "A. 有一个角",
+      "B. 有两个角",
+      "C. 三个角",
+      "D. 至少有两个角"
+    ],
+    "answer": "C",
+    "correct_text": "三个角",
+    "explain": "【教材P67定义】三角形中，三个角都是锐角的三角形叫作锐角三角形（注意：任何三角形都至少有两个锐角，必须三个角都是锐角才是锐角三角形）。"
+  },
+  {
+    "id": 11,
+    "page": 67,
+    "chapter": "13.1 三角形中的边角关系",
+    "section": "三角形按角分类（挖空2）",
+    "type": "定义",
+    "question": "三角形中，有一个角是直角的三角形叫作（　　）；有一个角是钝角的三角形叫作（　　）。",
+    "options": [
+      "A. 直角三角形；钝角三角形",
+      "B. 等腰三角形；不等边三角形",
+      "C. 锐角三角形；钝角三角形",
+      "D. 钝角三角形；直角三角形"
+    ],
+    "answer": "A",
+    "correct_text": "直角三角形；钝角三角形",
+    "explain": "【教材P67定义】三角形按角的大小可分为锐角三角形、直角三角形和钝角三角形。有一个角是直角的叫作直角三角形，有一个角是钝角的叫作钝角三角形。"
+  },
+  {
+    "id": 12,
+    "page": 67,
+    "chapter": "13.1 三角形中的边角关系",
+    "section": "直角三角形的要素",
+    "type": "定义",
+    "question": "直角三角形中，夹直角的两边叫作（　　），直角所对的边叫作（　　），直角三角形 ABC 可以记作“Rt△ABC”。",
+    "options": [
+      "A. 腰；底边",
+      "B. 直角边；斜边",
+      "C. 邻边；对边",
+      "D. 斜边；直角边"
+    ],
+    "answer": "B",
+    "correct_text": "直角边；斜边",
+    "explain": "【教材P67定义】直角三角形中，夹直角的两边叫作直角边，直角所对的边叫作斜边，直角三角形 ABC 可以记作“Rt△ABC”。"
+  },
+  {
+    "id": 13,
+    "page": 68,
+    "chapter": "13.1 三角形中的边角关系",
+    "section": "三角形的高线（挖空1）",
+    "type": "定义",
+    "question": "从三角形的一个顶点到它对边所在直线的（　　）叫作三角形的高线，也叫作三角形的高。",
+    "options": [
+      "A. 垂线",
+      "B. 垂线段",
+      "C. 线段",
+      "D. 距离"
+    ],
+    "answer": "B",
+    "correct_text": "垂线段",
+    "explain": "【教材P68定义】从三角形的一个顶点到它对边所在直线的垂线段叫作三角形的高线，也叫作三角形的高（高线是垂线段，不是直线）。"
+  },
+  {
+    "id": 14,
+    "page": 68,
+    "chapter": "13.1 三角形中的边角关系",
+    "section": "三角形的高线（挖空2）",
+    "type": "定义",
+    "question": "从三角形的一个顶点到它（　　）的垂线段叫作三角形的高线，也叫作三角形的高。",
+    "options": [
+      "A. 对边中点",
+      "B. 邻边所在直线",
+      "C. 对边所在直线",
+      "D. 对角平分线"
+    ],
+    "answer": "C",
+    "correct_text": "对边所在直线",
+    "explain": "【教材P68定义】从三角形的一个顶点到它对边所在直线的垂线段叫作三角形的高线（钝角三角形的高会落在对边的延长线上，因此是“对边所在直线”）。"
+  },
+  {
+    "id": 15,
+    "page": 68,
+    "chapter": "13.1 三角形中的边角关系",
+    "section": "三角形的角平分线",
+    "type": "定义",
+    "question": "三角形中，一个角的平分线与这个角对边相交，顶点与交点之间的（　　）叫作三角形的角平分线。",
+    "options": [
+      "A. 射线",
+      "B. 直线",
+      "C. 线段",
+      "D. 垂线段"
+    ],
+    "answer": "C",
+    "correct_text": "线段",
+    "explain": "【教材P68定义】三角形中，一个角的平分线与这个角对边相交，顶点与交点之间的线段叫作三角形的角平分线（角的平分线是射线，而三角形的角平分线是线段）。"
+  },
+  {
+    "id": 16,
+    "page": 69,
+    "chapter": "13.1 三角形中的边角关系",
+    "section": "三角形的中线",
+    "type": "定义",
+    "question": "三角形中，连接一个顶点与它（　　）的线段叫作三角形的中线。",
+    "options": [
+      "A. 对边中点",
+      "B. 邻边中点",
+      "C. 对边垂足",
+      "D. 对角顶点"
+    ],
+    "answer": "A",
+    "correct_text": "对边中点",
+    "explain": "【教材P69定义】三角形中，连接一个顶点与它对边中点的线段叫作三角形的中线。"
+  },
+  {
+    "id": 17,
+    "page": 70,
+    "chapter": "13.1 三角形中的边角关系",
+    "section": "三角形的重心（挖空1）",
+    "type": "定义",
+    "question": "三角形三条（　　）交于一点，这个交点就是三角形的重心。",
+    "options": [
+      "A. 高线",
+      "B. 角平分线",
+      "C. 中线",
+      "D. 边的垂直平分线"
+    ],
+    "answer": "C",
+    "correct_text": "中线",
+    "explain": "【教材P70定义】三角形三条中线交于一点，这个交点就是三角形的重心。"
+  },
+  {
+    "id": 18,
+    "page": 70,
+    "chapter": "13.1 三角形中的边角关系",
+    "section": "三角形的重心（挖空2）",
+    "type": "定义",
+    "question": "三角形三条中线交于一点，这个交点就是三角形的（　　）。",
+    "options": [
+      "A. 垂心",
+      "B. 外心",
+      "C. 内心",
+      "D. 重心"
+    ],
+    "answer": "D",
+    "correct_text": "重心",
+    "explain": "【教材P70定义】三角形三条中线交于一点，这个交点就是三角形的重心。"
+  },
+  {
+    "id": 19,
+    "page": 73,
+    "chapter": "13.2 命题与证明",
+    "section": "定义的概念",
+    "type": "定义",
+    "question": "像三角形、有理数那样，能明确界定某个对象含义的语句叫作（　　）。",
+    "options": [
+      "A. 命题",
+      "B. 定义",
+      "C. 定理",
+      "D. 推论"
+    ],
+    "answer": "B",
+    "correct_text": "定义",
+    "explain": "【教材P73定义】能明确界定某个对象含义的语句叫作定义。"
+  },
+  {
+    "id": 20,
+    "page": 74,
+    "chapter": "13.2 命题与证明",
+    "section": "命题的概念",
+    "type": "定义",
+    "question": "可以判断正确或不正确的（　　）叫作命题；如果一个语句不能判断真假，那么它就不是命题。",
+    "options": [
+      "A. 疑问语句",
+      "B. 祈使语句",
+      "C. 感叹语句",
+      "D. 陈述语句"
+    ],
+    "answer": "D",
+    "correct_text": "陈述语句",
+    "explain": "【教材P74定义】可以判断正确或不正确的陈述语句叫作命题（疑问句、祈使句、感叹句不能判断真假，不是命题）。"
+  },
+  {
+    "id": 21,
+    "page": 74,
+    "chapter": "13.2 命题与证明",
+    "section": "真命题与假命题",
+    "type": "定义",
+    "question": "经判断是正确的命题我们称之为（　　）；经判断是错误的命题我们称之为（　　）。",
+    "options": [
+      "A. 原命题；逆命题",
+      "B. 真命题；假命题",
+      "C. 定理；反例",
+      "D. 基本事实；推论"
+    ],
+    "answer": "B",
+    "correct_text": "真命题；假命题",
+    "explain": "【教材P74定义】经判断是正确的命题我们称之为真命题；经判断是错误的命题我们称之为假命题。"
+  },
+  {
+    "id": 22,
+    "page": 74,
+    "chapter": "13.2 命题与证明",
+    "section": "命题的组成",
+    "type": "定义",
+    "question": "以“如果……那么……”为关联词的命题的一般形式是“如果 p，那么 q”，其中 p 是这个命题的（　　），q 是这个命题的（　　）。",
+    "options": [
+      "A. 条件（或题设）；结论（或题断）",
+      "B. 结论（或题断）；条件（或题设）",
+      "C. 原命题；逆命题",
+      "D. 定义；推论"
+    ],
+    "answer": "A",
+    "correct_text": "条件（或题设）；结论（或题断）",
+    "explain": "【教材P74定义】命题通常由条件和结论两部分组成。“如果 p，那么 q”（或“若 p，则 q”）中，p 是条件（或题设），q 是结论（或题断）。"
+  },
+  {
+    "id": 23,
+    "page": 74,
+    "chapter": "13.2 命题与证明",
+    "section": "互逆命题与逆命题",
+    "type": "定义",
+    "question": "将命题“如果 p，那么 q”中的（　　）互换，便得到一个新命题“如果 q，那么 p”，我们把这样的两个命题称为（　　）。",
+    "options": [
+      "A. 真假性质；真假命题",
+      "B. 条件与结论；互逆命题",
+      "C. 关联词语；等价命题",
+      "D. 定理与推论；互逆定理"
+    ],
+    "answer": "B",
+    "correct_text": "条件与结论；互逆命题",
+    "explain": "【教材P74定义】将命题“如果 p，那么 q”中的条件与结论互换，便得到一个新命题“如果 q，那么 p”，这样的两个命题称为互逆命题，其中一个叫原命题，另一个叫原命题的逆命题。"
+  },
+  {
+    "id": 24,
+    "page": 74,
+    "chapter": "13.2 命题与证明",
+    "section": "反例的定义与作用",
+    "type": "定义",
+    "question": "像这种（　　），但不满足命题结论的例子，我们称之为反例。要说明一个命题是假命题，只要举出（　　）反例即可。",
+    "options": [
+      "A. 符合命题条件；一个",
+      "B. 符合命题结论；一个",
+      "C. 符合命题条件；无数个",
+      "D. 不符合命题条件；两个"
+    ],
+    "answer": "A",
+    "correct_text": "符合命题条件；一个",
+    "explain": "【教材P74定义】符合命题条件，但不满足命题结论的例子，我们称之为反例。要说明一个命题是假命题，只要举出一个反例即可。"
+  },
+  {
+    "id": 25,
+    "page": 76,
+    "chapter": "13.2 命题与证明",
+    "section": "定理的定义",
+    "type": "定义",
+    "question": "有些命题是从基本事实或其他真命题出发，用（　　）判断为正确的，并被选作判断命题真假的依据，这样的真命题叫作（　　）。",
+    "options": [
+      "A. 度量方法；基本事实",
+      "B. 推理方法；定理",
+      "C. 剪拼实验；定义",
+      "D. 举反例法；推论"
+    ],
+    "answer": "B",
+    "correct_text": "推理方法；定理",
+    "explain": "【教材P76定义】从基本事实或其他真命题出发，用推理方法判断为正确的，并被选作判断命题真假的依据，这样的真命题叫作定理。"
+  },
+  {
+    "id": 26,
+    "page": 76,
+    "chapter": "13.2 命题与证明",
+    "section": "演绎推理的定义",
+    "type": "定义",
+    "question": "从已知条件出发，依据（　　），并按照逻辑规则，推导出结论，这一方法称为演绎推理（或演绎法）。演绎推理的过程就是演绎证明。",
+    "options": [
+      "A. 观察、操作、实验",
+      "B. 度量、折叠、剪拼",
+      "C. 定义、基本事实、定理",
+      "D. 猜想、反例、逆命题"
+    ],
+    "answer": "C",
+    "correct_text": "定义、基本事实、定理",
+    "explain": "【教材P76定义及P85小结】从已知条件出发，依据定义、基本事实、定理，并按照逻辑规则，推导出结论，这一方法称为演绎推理（或演绎法）。"
+  },
+  {
+    "id": 27,
+    "page": 79,
+    "chapter": "13.2 命题与证明",
+    "section": "三角形内角和定理",
+    "type": "定理",
+    "question": "【三角形内角和定理】三角形的内角和等于（　　）。",
+    "options": [
+      "A. 90°",
+      "B. 180°",
+      "C. 270°",
+      "D. 360°"
+    ],
+    "answer": "B",
+    "correct_text": "180°",
+    "explain": "【教材P67、P79定理】三角形内角和定理：三角形的内角和等于 180°。"
+  },
+  {
+    "id": 28,
+    "page": 79,
+    "chapter": "13.2 命题与证明",
+    "section": "辅助线与推论的定义",
+    "type": "定义",
+    "question": "为了证明的需要，在原来图形上添画的线（通常画成虚线）叫作（　　）；由基本事实、定理直接得出的真命题叫作（　　）。",
+    "options": [
+      "A. 延长线；逆命题",
+      "B. 辅助线；推论",
+      "C. 对称轴；定义",
+      "D. 中垂线；基本事实"
+    ],
+    "answer": "B",
+    "correct_text": "辅助线；推论",
+    "explain": "【教材P79定义】为了证明的需要，在原来图形上添画的线叫作辅助线（通常画成虚线）；像这样，由基本事实、定理直接得出的真命题叫作推论。"
+  },
+  {
+    "id": 29,
+    "page": 79,
+    "chapter": "13.2 命题与证明",
+    "section": "三角形内角和定理的推论1与推论2",
+    "type": "推论",
+    "question": "【推论 1 & 推论 2】直角三角形的两锐角（　　）；有两个角互余的三角形是（　　）。",
+    "options": [
+      "A. 互补；锐角三角形",
+      "B. 相等；等腰三角形",
+      "C. 互余；直角三角形",
+      "D. 互余；锐角三角形"
+    ],
+    "answer": "C",
+    "correct_text": "互余；直角三角形",
+    "explain": "【教材P79 推论1、推论2】推论 1：直角三角形的两锐角互余；推论 2：有两个角互余的三角形是直角三角形。"
+  },
+  {
+    "id": 30,
+    "page": 80,
+    "chapter": "13.2 命题与证明",
+    "section": "三角形的外角定义",
+    "type": "定义",
+    "question": "像 ∠ACD 那样，由三角形的一边与（　　）组成的角，叫作三角形的外角。",
+    "options": [
+      "A. 另一边的垂线",
+      "B. 另一边的平分线",
+      "C. 另一边的延长线",
+      "D. 另一条边"
+    ],
+    "answer": "C",
+    "correct_text": "另一边的延长线",
+    "explain": "【教材P80定义】由三角形的一边与另一边的延长线组成的角，叫作三角形的外角。"
+  },
+  {
+    "id": 31,
+    "page": 81,
+    "chapter": "13.2 命题与证明",
+    "section": "三角形外角的推论3与推论4（挖空1）",
+    "type": "推论",
+    "question": "【推论 3 & 推论 4】三角形的外角（　　）与它不相邻的两个内角的和；三角形的外角（　　）与它不相邻的任何一个内角。",
+    "options": [
+      "A. 等于；大于",
+      "B. 大于；等于",
+      "C. 等于；小于",
+      "D. 小于；大于"
+    ],
+    "answer": "A",
+    "correct_text": "等于；大于",
+    "explain": "【教材P81 推论3、推论4】推论 3：三角形的外角等于与它不相邻的两个内角的和；推论 4：三角形的外角大于与它不相邻的任何一个内角。"
+  },
+  {
+    "id": 32,
+    "page": 81,
+    "chapter": "13.2 命题与证明",
+    "section": "三角形外角的推论3与外角和（挖空2）",
+    "type": "推论",
+    "question": "【推论 3 & 外角和结论】三角形的外角等于与它（　　）的两个内角的和；三角形的外角和为（　　）。",
+    "options": [
+      "A. 相邻；180°",
+      "B. 不相邻；360°",
+      "C. 不相邻；180°",
+      "D. 相邻；360°"
+    ],
+    "answer": "B",
+    "correct_text": "不相邻；360°",
+    "explain": "【教材P81 推论3及例5结论】推论 3：三角形的外角等于与它不相邻的两个内角的和；由此可得结论：三角形的外角和为 360°。"
+  }
+];
+
+const STORAGE_KEY = 'math8_ch13_wrong_ids_v1';
+
+let currentMode = 'all'; // 'all' | 'wrong'
+let activeQuestions = [];
+let currentIndex = 0;
+let answeredCurrent = false;
+let userAnswers = {}; // 记录当前轮次每题的作答状态
+
+// 统计
+let sessionTotal = 0;
+let sessionCorrect = 0;
+let sessionWrong = 0;
+
+function getWrongIds() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    return raw ? JSON.parse(raw) : [];
+  } catch (e) {
+    return [];
+  }
+}
+
+function saveWrongIds(ids) {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify([...new Set(ids)]));
+  } catch (e) {}
+}
+
+function addWrongId(id) {
+  const ids = getWrongIds();
+  if (!ids.includes(id)) {
+    ids.push(id);
+    saveWrongIds(ids);
+  }
+}
+
+function removeWrongId(id) {
+  const ids = getWrongIds().filter(item => item !== id);
+  saveWrongIds(ids);
+}
+
+function switchView(viewId) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.getElementById(viewId).classList.add('active');
+}
+
+// 刷新首页错题状态：有错题时显示错题复习按钮，无错题（或全部订正后）按钮自动消失
+function refreshHomeStats() {
+  const wrongIds = getWrongIds();
+  const count = wrongIds.length;
+  const headerCounter = document.getElementById('wrong-count-header');
+  const reviewBtn = document.getElementById('btn-review-wrong');
+
+  if (count === 0) {
+    headerCounter.textContent = '错题库: 0 题 (已全部掌握)';
+    headerCounter.style.color = 'var(--success)';
+    reviewBtn.style.display = 'none';
+  } else {
+    headerCounter.textContent = `待订正错题: ${count} 题`;
+    headerCounter.style.color = 'var(--danger)';
+    reviewBtn.style.display = 'flex';
+    reviewBtn.textContent = `📕 错题复习 (${count}题待订正)`;
+  }
+}
+
+function startQuiz(mode) {
+  currentMode = mode;
+  const wrongIds = getWrongIds();
+
+  if (mode === 'wrong') {
+    if (wrongIds.length === 0) {
+      refreshHomeStats();
+      return;
+    }
+    activeQuestions = QUESTION_DATABASE.filter(q => wrongIds.includes(q.id));
+  } else {
+    activeQuestions = [...QUESTION_DATABASE];
+  }
+
+  currentIndex = 0;
+  sessionTotal = activeQuestions.length;
+  sessionCorrect = 0;
+  sessionWrong = 0;
+  userAnswers = {};
+
+  switchView('view-quiz');
+  renderCurrentQuestion();
+}
+
+function formatQuestionHtml(text) {
+  return text.replace(/（　　）/g, '<span class="blank-highlight">（　？　）</span>');
+}
+
+function renderCurrentQuestion() {
+  const q = activeQuestions[currentIndex];
+  const savedAnswer = userAnswers[q.id];
+  answeredCurrent = !!savedAnswer;
+
+  document.getElementById('quiz-progress-text').textContent = `第 ${currentIndex + 1} / ${activeQuestions.length} 题`;
+  document.getElementById('quiz-mode-tag').textContent = currentMode === 'wrong' ? '错题订正模式' : '全章复习';
+  document.getElementById('quiz-mode-tag').style.background = currentMode === 'wrong' ? '#fee2e2' : '#eff6ff';
+  document.getElementById('quiz-mode-tag').style.color = currentMode === 'wrong' ? '#b91c1c' : '#1d4ed8';
+
+  const progressPercent = ((currentIndex + 1) / activeQuestions.length) * 100;
+  document.getElementById('progress-bar-fill').style.width = `${progressPercent}%`;
+
+  document.getElementById('quiz-type-tag').textContent = q.type;
+  document.getElementById('quiz-chapter-tag').textContent = `${q.chapter} · ${q.section}`;
+  document.getElementById('quiz-page-source').textContent = `教材第${q.page}页`;
+
+  document.getElementById('question-text').innerHTML = `${currentIndex + 1}. ${formatQuestionHtml(q.question)}`;
+
+  // 底部按钮状态
+  document.getElementById('btn-prev-q').disabled = (currentIndex === 0);
+  document.getElementById('btn-next-q').textContent = (currentIndex === activeQuestions.length - 1) ? '查看结果' : '下一题';
+
+  // 渲染选项
+  const optionsGroup = document.getElementById('options-group');
+  optionsGroup.innerHTML = '';
+  q.options.forEach((optText) => {
+    const key = optText.trim()[0]; // 'A', 'B', 'C', 'D'
+    const optDiv = document.createElement('div');
+    optDiv.className = 'option-item';
+    optDiv.dataset.key = key;
+    optDiv.innerHTML = `<span>${optText}</span><span class="opt-icon"></span>`;
+    optDiv.onclick = (e) => {
+      e.stopPropagation();
+      handleSelectOption(key);
+    };
+    optionsGroup.appendChild(optDiv);
+  });
+
+  // 隐藏或恢复反馈
+  const feedback = document.getElementById('feedback-box');
+  feedback.style.display = 'none';
+  feedback.className = 'feedback-box';
+
+  if (savedAnswer) {
+    applyAnswerUI(q, savedAnswer.selectedKey, savedAnswer.isRight, savedAnswer.bookMsg);
+  }
+}
+
+function applyAnswerUI(q, selectedKey, isRight, bookMsg) {
+  const feedback = document.getElementById('feedback-box');
+  const feedbackHeader = document.getElementById('feedback-header');
+  const explainText = document.getElementById('explain-text');
+  const wrongBookTip = document.getElementById('wrong-book-tip');
+  const nextInlineBtn = document.getElementById('btn-next-inline');
+
+  document.querySelectorAll('.option-item').forEach(el => {
+    el.classList.add('locked');
+    const key = el.dataset.key;
+    const iconSpan = el.querySelector('.opt-icon');
+    if (key === q.answer) {
+      el.classList.add('correct-reveal');
+      iconSpan.textContent = '✓';
+    }
+    if (!isRight && key === selectedKey) {
+      el.classList.add('wrong-selected');
+      iconSpan.textContent = '✗';
+    }
+  });
+
+  if (isRight) {
+    feedback.className = 'feedback-box correct';
+    feedbackHeader.innerHTML = `<span>✅ 回答正确！正确答案：${q.answer}（${q.correct_text}）</span>`;
+  } else {
+    feedback.className = 'feedback-box wrong';
+    feedbackHeader.innerHTML = `<span>❌ 回答错误！您选了 ${selectedKey}，正确答案：${q.answer}（${q.correct_text}）</span>`;
+  }
+
+  explainText.innerHTML = `${q.explain}`;
+  wrongBookTip.textContent = bookMsg;
+  nextInlineBtn.textContent = currentIndex < activeQuestions.length - 1 ? '下一题 ➔' : '完成并看报告 ➔';
+  feedback.style.display = 'flex';
+}
+
+// 点击选项后立即判题并展示解析
+function handleSelectOption(selectedKey) {
+  if (answeredCurrent) return;
+  answeredCurrent = true;
+
+  const q = activeQuestions[currentIndex];
+  const isRight = (selectedKey === q.answer);
+  let bookMsg = '';
+
+  if (isRight) {
+    sessionCorrect++;
+    if (currentMode === 'wrong') {
+      removeWrongId(q.id);
+      const rem = getWrongIds().length;
+      bookMsg = rem === 0 ? '🎉 已订正！错题库已全部清空！' : `✨ 已从错题库移除（剩余 ${rem} 题）`;
+    } else {
+      // 如果在全章模式下做对了之前错过的题，也自动从错题库订正移除
+      if (getWrongIds().includes(q.id)) {
+        removeWrongId(q.id);
+        bookMsg = '✨ 本题已成功订正并移出错题库';
+      } else {
+        bookMsg = '👍 掌握扎实，继续保持！';
+      }
+    }
+  } else {
+    sessionWrong++;
+    addWrongId(q.id);
+    bookMsg = '📌 已自动加入错题库，可在首页点击“错题复习”订正';
+  }
+
+  userAnswers[q.id] = { selectedKey, isRight, bookMsg };
+  applyAnswerUI(q, selectedKey, isRight, bookMsg);
+}
+
+function goToPrev(e) {
+  if (e) e.stopPropagation();
+  if (currentIndex > 0) {
+    currentIndex--;
+    renderCurrentQuestion();
+  }
+}
+
+function goToNext(e) {
+  if (e) e.stopPropagation();
+  if (currentIndex < activeQuestions.length - 1) {
+    currentIndex++;
+    renderCurrentQuestion();
+  } else {
+    showSummary();
+  }
+}
+
+// 键盘快捷键支持：按 A/B/C/D 选择选项，按 Enter/Space/方向右键 进入下一题
+document.addEventListener('keydown', (e) => {
+  const activeView = document.querySelector('.view.active');
+  if (activeView && activeView.id === 'view-quiz') {
+    const key = e.key.toUpperCase();
+    if (!answeredCurrent && ['A', 'B', 'C', 'D'].includes(key)) {
+      handleSelectOption(key);
+    } else if (e.key === 'ArrowRight' || (answeredCurrent && (e.key === 'Enter' || e.key === ' '))) {
+      e.preventDefault();
+      goToNext();
+    } else if (e.key === 'ArrowLeft') {
+      e.preventDefault();
+      goToPrev();
+    }
+  }
+});
+
+function showSummary() {
+  switchView('view-summary');
+  const answeredCount = sessionCorrect + sessionWrong;
+  const rate = answeredCount > 0 ? Math.round((sessionCorrect / answeredCount) * 100) : 0;
+  document.getElementById('summary-rate').textContent = `${rate}%`;
+  document.getElementById('summary-total').textContent = sessionTotal;
+  document.getElementById('summary-correct').textContent = sessionCorrect;
+  document.getElementById('summary-wrong').textContent = sessionWrong;
+
+  const remainingWrong = getWrongIds().length;
+  document.getElementById('summary-remaining-wrong').textContent = remainingWrong;
+
+  const summaryMsg = document.getElementById('summary-msg');
+  const wrongBtn = document.getElementById('btn-summary-wrong');
+
+  if (remainingWrong === 0) {
+    summaryMsg.textContent = '🎉 太棒了！所有错题已全部订正完毕！';
+    summaryMsg.style.color = 'var(--success)';
+    wrongBtn.style.display = 'none';
+  } else {
+    summaryMsg.textContent = `还有 ${remainingWrong} 道错题待订正，加油攻克它们！`;
+    summaryMsg.style.color = 'var(--danger)';
+    wrongBtn.style.display = 'flex';
+    wrongBtn.textContent = `📕 立即订正错题 (${remainingWrong}题)`;
+  }
+}
+
+function exitToHome(e) {
+  if (e) e.stopPropagation();
+  refreshHomeStats();
+  switchView('view-home');
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+  refreshHomeStats();
+});
+</script>
+</body>
+</html>
