@@ -3,483 +3,636 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>八上数学第13章《三角形中的边角关系、命题与证明》定理定义选择题复习</title>
+  <title>八上数学第13章 · 定理定义选择题复习</title>
   <style>
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
       -webkit-tap-highlight-color: transparent;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
     }
+
     :root {
-      --primary: #2563eb;
-      --primary-light: #eff6ff;
-      --primary-dark: #1d4ed8;
-      --success: #16a34a;
-      --success-light: #dcfce7;
-      --danger: #dc2626;
-      --danger-light: #fee2e2;
-      --warning: #d97706;
-      --warning-light: #fef3c7;
-      --bg: #f8fafc;
-      --card-bg: #ffffff;
-      --text-main: #0f172a;
-      --text-muted: #64748b;
-      --border: #e2e8f0;
+      /* Apple iOS System Colors */
+      --ios-bg: #F2F2F7;
+      --ios-card: #FFFFFF;
+      --ios-blue: #007AFF;
+      --ios-blue-active: #0062CC;
+      --ios-blue-tint: rgba(0, 122, 255, 0.11);
+      --ios-green: #34C759;
+      --ios-green-tint: rgba(52, 199, 89, 0.14);
+      --ios-red: #FF3B30;
+      --ios-red-tint: rgba(255, 59, 48, 0.13);
+      --ios-orange: #FF9500;
+      --ios-label: #1C1C1E;
+      --ios-secondary: #636366;
+      --ios-tertiary: #8E8E93;
+      --ios-separator: rgba(60, 60, 67, 0.12);
+      --ios-fill: rgba(118, 118, 128, 0.08);
+      --shadow-card: 0 8px 28px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.03);
     }
+
     html, body {
       height: 100dvh;
       max-height: 100dvh;
       width: 100vw;
       overflow: hidden;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
-      background: var(--bg);
-      color: var(--text-main);
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "PingFang SC", "Helvetica Neue", Arial, sans-serif;
+      background-color: var(--ios-bg);
+      color: var(--ios-label);
     }
+
+    /* 手机端全屏适配，桌面端模拟手机屏幕比例居中 */
     #app {
       height: 100dvh;
       max-height: 100dvh;
       width: 100%;
-      max-width: 680px;
+      max-width: 460px;
       margin: 0 auto;
       display: flex;
       flex-direction: column;
       position: relative;
+      background-color: var(--ios-bg);
     }
 
-    /* 视图基础 - 严格单屏控制 */
+    @media (min-width: 500px) {
+      body {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #E5E5EA;
+      }
+      #app {
+        height: min(96dvh, 880px);
+        max-height: min(96dvh, 880px);
+        border-radius: 38px;
+        box-shadow: 0 24px 60px rgba(0, 0, 0, 0.14), 0 0 0 8px rgba(255, 255, 255, 0.7);
+        overflow: hidden;
+      }
+    }
+
+    /* 视图基础 - 严格单屏免滚动 */
     .view {
       display: none;
       height: 100%;
       width: 100%;
       flex-direction: column;
       justify-content: space-between;
-      padding: env(safe-area-inset-top, 10px) 14px env(safe-area-inset-bottom, 10px) 14px;
+      padding: max(env(safe-area-inset-top, 10px), 10px) 16px max(env(safe-area-inset-bottom, 12px), 12px) 16px;
+      overflow: hidden;
     }
     .view.active {
       display: flex;
     }
 
-    /* 顶部导航条 */
-    .header-bar {
+    /* 顶部 Apple 导航栏 */
+    .nav-bar {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 4px 0;
-      border-bottom: 1px solid var(--border);
-      min-height: 36px;
+      height: 42px;
       flex-shrink: 0;
     }
-    .back-btn {
+    .nav-btn {
       background: none;
       border: none;
-      font-size: 13.5px;
-      color: var(--primary);
-      cursor: pointer;
+      font-size: 16px;
       font-weight: 600;
-      padding: 3px 6px;
-      border-radius: 6px;
+      color: var(--ios-blue);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 3px;
+      padding: 6px 4px;
+      border-radius: 8px;
+      transition: opacity 0.15s;
     }
-    .back-btn:hover {
-      background: var(--primary-light);
+    .nav-btn:active {
+      opacity: 0.55;
     }
-    .page-title {
+    .nav-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--ios-label);
+      letter-spacing: -0.2px;
+    }
+    .nav-pill {
       font-size: 13px;
       font-weight: 600;
-      color: var(--text-muted);
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: var(--ios-blue-tint);
+      color: var(--ios-blue);
     }
 
-    /* 首页样式 */
-    .home-content {
+    /* 顶部细进度条 */
+    .progress-track {
+      width: 100%;
+      height: 5px;
+      background: rgba(120, 120, 128, 0.16);
+      border-radius: 999px;
+      overflow: hidden;
+      margin: 2px 0 8px 0;
+      flex-shrink: 0;
+    }
+    .progress-fill {
+      height: 100%;
+      background: var(--ios-blue);
+      border-radius: 999px;
+      width: 0%;
+      transition: width 0.28s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+
+    /* ==================== 首页样式 ==================== */
+    .home-body {
       flex: 1;
       display: flex;
       flex-direction: column;
-      align-items: center;
       justify-content: center;
-      text-align: center;
-      padding: 0 6px;
+      gap: 14px;
       min-height: 0;
     }
-    .badge {
+    .hero-card {
+      background: var(--ios-card);
+      border-radius: 24px;
+      padding: 22px 18px;
+      box-shadow: var(--shadow-card);
+      text-align: center;
+    }
+    .hero-badge {
       display: inline-block;
-      padding: 4px 12px;
-      background: var(--primary-light);
-      color: var(--primary);
+      padding: 5px 13px;
+      background: var(--ios-blue-tint);
+      color: var(--ios-blue);
       border-radius: 999px;
-      font-size: 12px;
+      font-size: 13px;
       font-weight: 600;
       margin-bottom: 10px;
     }
-    .home-title {
-      font-size: 22px;
+    .hero-title {
+      font-size: clamp(23px, 6vw, 27px);
       font-weight: 800;
-      color: #1e293b;
+      color: var(--ios-label);
+      line-height: 1.28;
+      letter-spacing: -0.4px;
       margin-bottom: 8px;
-      line-height: 1.3;
     }
-    .home-desc {
-      font-size: 12.5px;
-      color: var(--text-muted);
-      line-height: 1.5;
-      margin-bottom: 14px;
+    .hero-subtitle {
+      font-size: clamp(14px, 3.8vw, 15.5px);
+      color: var(--ios-secondary);
+      line-height: 1.45;
     }
-    .knowledge-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 8px;
-      width: 100%;
-      margin-bottom: 16px;
+
+    .module-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .module-item {
+      background: var(--ios-card);
+      border-radius: 18px;
+      padding: 14px 16px;
+      box-shadow: var(--shadow-card);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .module-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      background: var(--ios-blue-tint);
+      color: var(--ios-blue);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+    .module-info {
+      flex: 1;
       text-align: left;
     }
-    .k-card {
-      background: #fff;
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 8px 10px;
-    }
-    .k-title {
-      font-size: 12px;
+    .module-name {
+      font-size: clamp(15px, 4vw, 16.5px);
       font-weight: 700;
-      color: var(--primary);
-      margin-bottom: 2px;
+      color: var(--ios-label);
+      margin-bottom: 3px;
     }
-    .k-sub {
-      font-size: 11px;
-      color: var(--text-muted);
+    .module-desc {
+      font-size: clamp(13px, 3.4vw, 14px);
+      color: var(--ios-secondary);
       line-height: 1.35;
     }
-    .stat-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 5px 12px;
-      background: #fff;
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      font-size: 11.5px;
-      color: #475569;
-      margin-bottom: 18px;
-    }
-    .home-actions {
-      width: 100%;
+
+    .home-footer {
       display: flex;
       flex-direction: column;
       gap: 10px;
       flex-shrink: 0;
+      padding-top: 4px;
     }
 
-    /* 进度条 */
-    .progress-bar-wrap {
-      width: 100%;
-      height: 4px;
-      background: #e2e8f0;
-      border-radius: 2px;
-      overflow: hidden;
-      margin-top: 3px;
-      flex-shrink: 0;
-    }
-    .progress-bar-fill {
-      height: 100%;
-      background: var(--primary);
-      width: 0%;
-      transition: width 0.2s ease;
-    }
-
-    /* 答题区核心卡片 - 严格一屏紧凑布局，免滚动 */
-    .quiz-card {
+    /* ==================== 答题页核心布局 (大字号 + 单屏自适应) ==================== */
+    .quiz-main {
       flex: 1;
-      background: var(--card-bg);
-      border-radius: 14px;
-      padding: 12px 14px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      margin: 6px 0;
-      border: 1px solid var(--border);
-      box-shadow: 0 3px 12px -2px rgba(0, 0, 0, 0.05);
+      gap: 8px;
       min-height: 0;
       overflow: hidden;
     }
-    .meta-tags {
+
+    /* 题干卡片 */
+    .question-card {
+      background: var(--ios-card);
+      border-radius: 22px;
+      padding: 14px 16px;
+      box-shadow: var(--shadow-card);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      flex-shrink: 1;
+      min-height: 0;
+    }
+    .card-meta {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 6px;
+      margin-bottom: 8px;
+      gap: 6px;
       flex-shrink: 0;
     }
-    .meta-tag-group {
+    .meta-left {
       display: flex;
       align-items: center;
       gap: 6px;
+      min-width: 0;
     }
-    .meta-tag {
-      font-size: 11px;
-      background: #f1f5f9;
-      color: #475569;
-      padding: 2px 7px;
-      border-radius: 4px;
-      font-weight: 600;
-    }
-    .meta-tag.type-tag {
-      background: var(--primary-light);
-      color: var(--primary);
-    }
-    .meta-source {
-      font-size: 11px;
-      color: #94a3b8;
-    }
-
-    .question-box {
-      margin-bottom: 6px;
-      flex-shrink: 0;
-    }
-    .question-text {
-      font-size: 14.5px;
-      line-height: 1.45;
-      color: #1e293b;
-      font-weight: 600;
-    }
-    .blank-highlight {
-      color: var(--primary);
+    .tag-badge {
+      font-size: 13px;
       font-weight: 700;
-      text-decoration: underline;
-      text-underline-offset: 3px;
+      padding: 3px 9px;
+      border-radius: 7px;
+      background: var(--ios-blue-tint);
+      color: var(--ios-blue);
+      white-space: nowrap;
     }
-
-    /* 选项列表 */
-    .options-group {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-      flex-shrink: 0;
-    }
-    .option-item {
-      padding: 8px 12px;
-      border: 1.5px solid var(--border);
-      border-radius: 9px;
+    .section-label {
       font-size: 13.5px;
-      line-height: 1.3;
-      color: #334155;
-      background: #fff;
-      cursor: pointer;
+      font-weight: 600;
+      color: var(--ios-secondary);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .page-badge {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--ios-tertiary);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    /* 题目正文 - 尽可能大且自适应屏幕高度 */
+    .question-text {
+      font-size: clamp(17.5px, 2.55dvh, 21.5px);
+      line-height: 1.42;
+      font-weight: 700;
+      color: var(--ios-label);
+      letter-spacing: -0.2px;
+      word-break: break-word;
+    }
+    .blank-pill {
+      display: inline-block;
+      color: var(--ios-blue);
+      background: var(--ios-blue-tint);
+      padding: 0px 8px;
+      margin: 0 2px;
+      border-radius: 7px;
+      font-weight: 800;
+      border-bottom: 2px solid var(--ios-blue);
+    }
+
+    /* 选项区 - 大字号圆角按钮 */
+    .options-list {
+      display: flex;
+      flex-direction: column;
+      gap: clamp(6px, 1.1dvh, 10px);
+      flex-shrink: 0;
+    }
+    .option-row {
+      background: var(--ios-card);
+      border: 2px solid transparent;
+      border-radius: 16px;
+      padding: clamp(9px, 1.45dvh, 13px) 14px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
       display: flex;
       align-items: center;
       justify-content: space-between;
-      transition: all 0.15s ease;
-      touch-action: manipulation;
+      gap: 10px;
+      cursor: pointer;
       user-select: none;
+      touch-action: manipulation;
+      transition: transform 0.12s ease, background-color 0.15s ease, border-color 0.15s ease;
     }
-    .option-item:hover:not(.locked) {
-      border-color: #93c5fd;
-      background: #f8fafc;
+    .option-row:active:not(.locked) {
+      transform: scale(0.985);
+      background-color: #E5F1FF;
+      border-color: var(--ios-blue);
     }
-    .option-item:active:not(.locked) {
-      background: var(--primary-light);
-      border-color: var(--primary);
-    }
-    .option-item.correct-reveal {
-      border-color: var(--success) !important;
-      background: var(--success-light) !important;
-      color: #166534 !important;
-      font-weight: 700;
-    }
-    .option-item.wrong-selected {
-      border-color: var(--danger) !important;
-      background: var(--danger-light) !important;
-      color: #991b1b !important;
-      font-weight: 700;
-    }
-
-    /* 反馈判定区 + 下一题控制栏 */
-    .feedback-box {
-      margin-top: 6px;
-      padding: 8px 11px;
-      border-radius: 9px;
-      font-size: 12px;
-      display: none;
-      flex-direction: column;
-      line-height: 1.38;
-      animation: fadeIn 0.15s ease-in-out;
-      flex-shrink: 0;
-    }
-    .feedback-box.correct {
+    .option-left {
       display: flex;
-      background: var(--success-light);
-      color: #166534;
-      border: 1px solid #bbf7d0;
+      align-items: center;
+      gap: 11px;
+      min-width: 0;
+      flex: 1;
     }
-    .feedback-box.wrong {
-      display: flex;
-      background: var(--danger-light);
-      color: #991b1b;
-      border: 1px solid #fecaca;
-    }
-    .feedback-header {
+    .opt-letter {
+      width: clamp(28px, 3.8dvh, 33px);
+      height: clamp(28px, 3.8dvh, 33px);
+      border-radius: 50%;
+      background: var(--ios-fill);
+      color: var(--ios-label);
+      font-size: clamp(14.5px, 2dvh, 16.5px);
       font-weight: 700;
       display: flex;
       align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: all 0.15s ease;
+    }
+    .opt-content {
+      font-size: clamp(16px, 2.25dvh, 19px);
+      font-weight: 600;
+      color: var(--ios-label);
+      line-height: 1.3;
+      word-break: break-word;
+    }
+    .opt-mark {
+      font-size: 18px;
+      font-weight: 800;
+      flex-shrink: 0;
+      width: 22px;
+      text-align: center;
+    }
+
+    /* 选中正误状态 */
+    .option-row.correct-reveal {
+      background: var(--ios-green-tint) !important;
+      border-color: var(--ios-green) !important;
+    }
+    .option-row.correct-reveal .opt-letter {
+      background: var(--ios-green) !important;
+      color: #FFFFFF !important;
+    }
+    .option-row.correct-reveal .opt-content {
+      color: #116629 !important;
+      font-weight: 700;
+    }
+    .option-row.correct-reveal .opt-mark {
+      color: var(--ios-green);
+    }
+
+    .option-row.wrong-selected {
+      background: var(--ios-red-tint) !important;
+      border-color: var(--ios-red) !important;
+    }
+    .option-row.wrong-selected .opt-letter {
+      background: var(--ios-red) !important;
+      color: #FFFFFF !important;
+    }
+    .option-row.wrong-selected .opt-content {
+      color: #A81B12 !important;
+      font-weight: 700;
+    }
+    .option-row.wrong-selected .opt-mark {
+      color: var(--ios-red);
+    }
+
+    /* 解析反馈面板 - 预留空间或紧凑弹出，保证一屏不溢出 */
+    .feedback-panel {
+      background: var(--ios-card);
+      border-radius: 18px;
+      padding: clamp(9px, 1.4dvh, 13px) 14px;
+      box-shadow: var(--shadow-card);
+      display: flex;
+      flex-direction: column;
       justify-content: space-between;
       gap: 4px;
-      font-size: 12.5px;
+      flex-shrink: 0;
+      border-left: 5px solid var(--ios-tertiary);
+      transition: all 0.2s ease;
     }
-    .explain-text {
-      margin-top: 3px;
-      color: #1e293b;
-      font-size: 11.5px;
-    }
-    .feedback-actions {
-      display: flex;
+    .feedback-panel.placeholder {
+      background: rgba(255, 255, 255, 0.65);
+      border-left-color: var(--ios-blue);
+      flex-direction: row;
       align-items: center;
-      justify-content: space-between;
-      margin-top: 5px;
-      padding-top: 4px;
-      border-top: 1px dashed rgba(0,0,0,0.1);
-    }
-    .next-tip {
-      font-size: 11px;
+      justify-content: center;
+      padding: 12px 14px;
+      color: var(--ios-secondary);
+      font-size: clamp(14px, 2dvh, 16px);
       font-weight: 500;
-      opacity: 0.85;
     }
-    .next-inline-btn {
-      background: var(--primary);
-      color: #fff;
-      border: none;
-      border-radius: 6px;
-      padding: 3px 10px;
-      font-size: 11.5px;
-      font-weight: 600;
-      cursor: pointer;
+    .feedback-panel.correct {
+      background: #F2FBF5;
+      border-left-color: var(--ios-green);
     }
-
-    /* 底部快速导航栏 */
-    .quiz-footer {
+    .feedback-panel.wrong {
+      background: #FFF5F5;
+      border-left-color: var(--ios-red);
+    }
+    .fb-top {
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 8px;
-      padding-top: 2px;
-      flex-shrink: 0;
     }
-    .nav-mini-btn {
-      background: #fff;
-      border: 1px solid var(--border);
-      color: #475569;
-      padding: 6px 12px;
-      border-radius: 8px;
-      font-size: 12px;
+    .fb-status {
+      font-size: clamp(15px, 2.1dvh, 17px);
+      font-weight: 800;
+    }
+    .feedback-panel.correct .fb-status {
+      color: #167932;
+    }
+    .feedback-panel.wrong .fb-status {
+      color: #C81E14;
+    }
+    .fb-explain {
+      font-size: clamp(13.5px, 1.95dvh, 15.5px);
+      line-height: 1.38;
+      color: var(--ios-label);
+      font-weight: 500;
+    }
+    .fb-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-top: 2px;
+      padding-top: 5px;
+      border-top: 1px solid rgba(60, 60, 67, 0.08);
+    }
+    .fb-note {
+      font-size: clamp(12px, 1.75dvh, 13.5px);
+      color: var(--ios-secondary);
       font-weight: 600;
-      cursor: pointer;
     }
-    .nav-mini-btn:disabled {
-      opacity: 0.4;
-      cursor: not-allowed;
+    .next-pill-btn {
+      background: var(--ios-blue);
+      color: #FFFFFF;
+      border: none;
+      border-radius: 999px;
+      padding: 6px 15px;
+      font-size: clamp(13.5px, 1.9dvh, 15px);
+      font-weight: 700;
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+      box-shadow: 0 2px 8px rgba(0, 122, 255, 0.25);
+    }
+    .next-pill-btn:active {
+      background: var(--ios-blue-active);
+      transform: scale(0.97);
     }
 
-    /* 结算页面 */
+    /* 底部切题控制栏 */
+    .quiz-bottom-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding-top: 4px;
+      flex-shrink: 0;
+    }
+    .step-btn {
+      background: var(--ios-card);
+      border: 1px solid var(--ios-separator);
+      color: var(--ios-label);
+      padding: 9px 18px;
+      border-radius: 12px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .step-btn:active:not(:disabled) {
+      background: #E5E5EA;
+      transform: scale(0.97);
+    }
+    .step-btn:disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+    }
+    .step-hint {
+      font-size: 13px;
+      color: var(--ios-tertiary);
+      font-weight: 500;
+      text-align: center;
+    }
+
+    /* ==================== 结算页样式 ==================== */
     .summary-card {
       flex: 1;
-      background: #fff;
-      border-radius: 16px;
-      padding: 16px 14px;
+      background: var(--ios-card);
+      border-radius: 26px;
+      padding: 22px 18px;
+      box-shadow: var(--shadow-card);
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       text-align: center;
-      border: 1px solid var(--border);
       margin: 8px 0;
       min-height: 0;
     }
-    .score-circle {
-      width: 90px;
-      height: 90px;
+    .ring-box {
+      width: 112px;
+      height: 112px;
       border-radius: 50%;
-      background: var(--primary-light);
-      border: 4px solid var(--primary);
+      background: var(--ios-blue-tint);
+      border: 6px solid var(--ios-blue);
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      margin-bottom: 12px;
+      margin-bottom: 14px;
     }
-    .score-num {
-      font-size: 24px;
+    .ring-num {
+      font-size: 30px;
       font-weight: 800;
-      color: var(--primary);
+      color: var(--ios-blue);
       line-height: 1;
     }
-    .score-label {
-      font-size: 10.5px;
-      color: var(--text-muted);
-      margin-top: 3px;
+    .ring-label {
+      font-size: 12.5px;
+      font-weight: 600;
+      color: var(--ios-secondary);
+      margin-top: 4px;
+    }
+    .summary-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--ios-label);
+      margin-bottom: 16px;
     }
     .stats-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 8px;
+      gap: 10px;
       width: 100%;
-      margin-bottom: 12px;
     }
-    .stat-item {
-      background: #f8fafc;
-      padding: 8px;
-      border-radius: 8px;
-      border: 1px solid var(--border);
+    .stat-cell {
+      background: var(--ios-bg);
+      padding: 12px 10px;
+      border-radius: 16px;
     }
-    .stat-val {
-      font-size: 16px;
-      font-weight: 700;
-      color: #1e293b;
+    .stat-num {
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--ios-label);
     }
-    .stat-name {
-      font-size: 10.5px;
-      color: var(--text-muted);
-      margin-top: 2px;
+    .stat-label {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--ios-secondary);
+      margin-top: 3px;
     }
 
-    .btn {
+    /* Apple 风格大按钮 */
+    .ios-btn {
       width: 100%;
-      height: 42px;
-      border-radius: 10px;
-      font-size: 14.5px;
-      font-weight: 600;
+      height: 50px;
+      border-radius: 15px;
+      font-size: 17px;
+      font-weight: 700;
       border: none;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: all 0.15s ease;
+      gap: 6px;
+      transition: transform 0.12s ease, opacity 0.15s ease;
       touch-action: manipulation;
     }
-    .btn-primary {
-      background: var(--primary);
-      color: #fff;
+    .ios-btn:active {
+      transform: scale(0.985);
+      opacity: 0.9;
     }
-    .btn-primary:active {
-      background: var(--primary-dark);
-      transform: scale(0.99);
+    .ios-btn-primary {
+      background: var(--ios-blue);
+      color: #FFFFFF;
+      box-shadow: 0 4px 14px rgba(0, 122, 255, 0.28);
     }
-    .btn-danger {
-      background: var(--danger);
-      color: #fff;
-      box-shadow: 0 4px 10px rgba(220, 38, 38, 0.2);
-    }
-    .btn-danger:active {
-      background: #b91c1c;
-      transform: scale(0.99);
-    }
-    .btn-secondary {
-      background: #f1f5f9;
-      color: #334155;
-      border: 1px solid var(--border);
-    }
-    .btn-secondary:active {
-      background: #e2e8f0;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(2px); }
-      to { opacity: 1; transform: translateY(0); }
+    .ios-btn-danger {
+      background: var(--ios-red);
+      color: #FFFFFF;
+      box-shadow: 0 4px 14px rgba(255, 59, 48, 0.26);
     }
   </style>
 </head>
@@ -487,123 +640,120 @@
 <div id="app">
   <!-- 首页 -->
   <div id="view-home" class="view active">
-    <div class="header-bar">
-      <div style="font-weight:700; color:var(--primary); font-size:14px;">📐 沪科版八上数学 · 第13章</div>
-      <div id="wrong-count-header" class="page-title">错题库: 0 题</div>
+    <div class="nav-bar">
+      <div class="nav-title" style="color:var(--ios-blue); font-weight:700;">📐 沪科版八上数学</div>
+      <div id="wrong-count-header" class="nav-pill">错题库: 0 题</div>
     </div>
-    <div class="home-content">
-      <span class="badge">2022课标修订版 · 定理定义推论专项</span>
-      <h1 class="home-title">第13章 三角形中的边角关系、<br>命题与证明</h1>
-      <p class="home-desc">提取全章所有定义、性质、定理、推论重点字词挖空<br>单题单屏免滚动 · 点击选项即刻判题并显示解析</p>
-      
-      <div class="knowledge-grid">
-        <div class="k-card">
-          <div class="k-title">13.1 边角关系与重要线段</div>
-          <div class="k-sub">三角形定义与分类、三边关系性质、内角和、高线/角平分线/中线与重心 (第1~18题)</div>
-        </div>
-        <div class="k-card">
-          <div class="k-title">13.2 命题与证明及推论</div>
-          <div class="k-sub">定义与命题、互逆命题与反例、定理与演绎推理、内角和定理及4个推论、外角和 (第19~32题)</div>
-        </div>
+
+    <div class="home-body">
+      <div class="hero-card">
+        <span class="hero-badge">第 13 章 · 定理定义推论专项</span>
+        <h1 class="hero-title">三角形中的边角关系、<br>命题与证明</h1>
+        <p class="hero-subtitle">全章核心概念、性质定理与推论挖空精练<br>点选即判 · 单屏大字免滑动 · 错题自动追踪</p>
       </div>
 
-      <div class="stat-pill">
-        <span>⚡ 点击选项自动显示解析</span>
-        <span>•</span>
-        <span>🎯 订正后错题按钮自动消失</span>
+      <div class="module-list">
+        <div class="module-item">
+          <div class="module-icon">△</div>
+          <div class="module-info">
+            <div class="module-name">13.1 三角形中的边角关系</div>
+            <div class="module-desc">定义与分类、三边关系性质、内角和、高线/角平分线/中线与重心（第1～18题）</div>
+          </div>
+        </div>
+        <div class="module-item">
+          <div class="module-icon">∵</div>
+          <div class="module-info">
+            <div class="module-name">13.2 命题与证明及推论</div>
+            <div class="module-desc">定义与命题、互逆命题与反例、定理与演绎推理、4个推论及外角和（第19～32题）</div>
+          </div>
+        </div>
       </div>
+    </div>
 
-      <div class="home-actions">
-        <button id="btn-start-all" class="btn btn-primary" onclick="startQuiz('all')">开始全章复习 (共32题)</button>
-        <!-- 当有错题时自动显示，无错题或全部订正后自动隐藏消失 -->
-        <button id="btn-review-wrong" class="btn btn-danger" style="display: none;" onclick="startQuiz('wrong')">📕 错题复习 (0题)</button>
-      </div>
+    <div class="home-footer">
+      <button id="btn-start-all" class="ios-btn ios-btn-primary" onclick="startQuiz('all')">开始全章复习（共 32 题）</button>
+      <!-- 当有错题时自动显示，订正完毕后自动消失 -->
+      <button id="btn-review-wrong" class="ios-btn ios-btn-danger" style="display: none;" onclick="startQuiz('wrong')">📕 错题复习（0 题）</button>
     </div>
   </div>
 
-  <!-- 答题页 (一题一屏，无需向下滑动) -->
+  <!-- 答题页 (Apple 卡片风格，大字体，单屏免滚动) -->
   <div id="view-quiz" class="view">
-    <div class="header-bar">
-      <button class="back-btn" onclick="exitToHome(event)">← 返回首页</button>
-      <div id="quiz-progress-text" class="page-title">第 1 / 32 题</div>
-      <div id="quiz-mode-tag" class="meta-tag" style="background:var(--primary-light); color:var(--primary);">全章复习</div>
+    <div class="nav-bar">
+      <button class="nav-btn" onclick="exitToHome(event)">‹ 首页</button>
+      <div id="quiz-progress-text" class="nav-title">1 / 32</div>
+      <div id="quiz-mode-tag" class="nav-pill">全章复习</div>
     </div>
-    <div class="progress-bar-wrap">
-      <div id="progress-bar-fill" class="progress-bar-fill"></div>
+    <div class="progress-track">
+      <div id="progress-bar-fill" class="progress-fill"></div>
     </div>
 
-    <div class="quiz-card">
-      <div>
-        <div class="meta-tags">
-          <div class="meta-tag-group">
-            <span id="quiz-type-tag" class="meta-tag type-tag">定义</span>
-            <span id="quiz-chapter-tag" class="meta-tag">13.1 三角形中的边角关系</span>
+    <div class="quiz-main">
+      <!-- 题目卡片 -->
+      <div class="question-card">
+        <div class="card-meta">
+          <div class="meta-left">
+            <span id="quiz-type-tag" class="tag-badge">定义</span>
+            <span id="quiz-chapter-tag" class="section-label">三角形的定义</span>
           </div>
-          <span id="quiz-page-source" class="meta-source">教材P64</span>
+          <span id="quiz-page-source" class="page-badge">P64</span>
         </div>
-
-        <div class="question-box">
-          <p id="question-text" class="question-text"></p>
-        </div>
+        <div id="question-text" class="question-text"></div>
       </div>
 
-      <div>
-        <div id="options-group" class="options-group">
-          <!-- 选项由 JS 动态生成 -->
-        </div>
+      <!-- 四个选项 -->
+      <div id="options-group" class="options-list"></div>
 
-        <div id="feedback-box" class="feedback-box">
-          <div id="feedback-header" class="feedback-header"></div>
-          <div id="explain-text" class="explain-text"></div>
-          <div class="feedback-actions">
-            <span id="wrong-book-tip" class="next-tip"></span>
-            <button id="btn-next-inline" class="next-inline-btn" onclick="goToNext(event)">下一题 ➔</button>
-          </div>
-        </div>
+      <!-- 答案解析面板 (默认显示轻提示，点击选项后即刻切换为正误+解析) -->
+      <div id="feedback-box" class="feedback-panel placeholder">
+        <span>👆 请直接点击上方选项作答</span>
       </div>
     </div>
 
-    <div class="quiz-footer">
-      <button id="btn-prev-q" class="nav-mini-btn" onclick="goToPrev(event)">上一题</button>
-      <span id="footer-hint" style="font-size:11.5px; color:var(--text-muted);">点击选项直接判题 · 支持键盘 A/B/C/D</span>
-      <button id="btn-next-q" class="nav-mini-btn" onclick="goToNext(event)">下一题</button>
+    <div class="quiz-bottom-bar">
+      <button id="btn-prev-q" class="step-btn" onclick="goToPrev(event)">上一题</button>
+      <span class="step-hint">点选即判 · 单屏适配</span>
+      <button id="btn-next-q" class="step-btn" onclick="goToNext(event)">下一题</button>
     </div>
   </div>
 
   <!-- 结算页 -->
   <div id="view-summary" class="view">
-    <div class="header-bar">
-      <div class="page-title" style="margin: 0 auto;">本次复习完成报告</div>
+    <div class="nav-bar">
+      <button class="nav-btn" onclick="exitToHome(event)">‹ 首页</button>
+      <div class="nav-title">复习报告</div>
+      <div style="width:48px;"></div>
     </div>
+
     <div class="summary-card">
-      <div class="score-circle">
-        <div id="summary-rate" class="score-num">100%</div>
-        <div class="score-label">正确率</div>
+      <div class="ring-box">
+        <div id="summary-rate" class="ring-num">100%</div>
+        <div class="ring-label">正确率</div>
       </div>
-      <div id="summary-msg" style="font-size:14px; font-weight:700; color:#1e293b; margin-bottom:12px;">表现出色！</div>
+      <div id="summary-msg" class="summary-title">全部掌握！</div>
       <div class="stats-grid">
-        <div class="stat-item">
-          <div id="summary-total" class="stat-val">32</div>
-          <div class="stat-name">本次总题数</div>
+        <div class="stat-cell">
+          <div id="summary-total" class="stat-num">32</div>
+          <div class="stat-label">本轮题数</div>
         </div>
-        <div class="stat-item">
-          <div id="summary-correct" class="stat-val" style="color:var(--success);">32</div>
-          <div class="stat-name">答对题数</div>
+        <div class="stat-cell">
+          <div id="summary-correct" class="stat-num" style="color:var(--ios-green);">32</div>
+          <div class="stat-label">回答正确</div>
         </div>
-        <div class="stat-item">
-          <div id="summary-wrong" class="stat-val" style="color:var(--danger);">0</div>
-          <div class="stat-name">答错题数</div>
+        <div class="stat-cell">
+          <div id="summary-wrong" class="stat-num" style="color:var(--ios-red);">0</div>
+          <div class="stat-label">回答错误</div>
         </div>
-        <div class="stat-item">
-          <div id="summary-remaining-wrong" class="stat-val">0</div>
-          <div class="stat-name">待订正错题</div>
+        <div class="stat-cell">
+          <div id="summary-remaining-wrong" class="stat-num">0</div>
+          <div class="stat-label">待订正错题</div>
         </div>
       </div>
     </div>
-    <div style="display:flex; flex-direction:column; gap:8px; flex-shrink:0;">
-      <!-- 结算页的错题复习按钮同样遵循：有错题才显示，订正完自动消失 -->
-      <button id="btn-summary-wrong" class="btn btn-danger" style="display: none;" onclick="startQuiz('wrong')">📕 立即订正错题</button>
-      <button class="btn btn-primary" onclick="exitToHome(event)">返回首页</button>
+
+    <div class="home-footer">
+      <button id="btn-summary-wrong" class="ios-btn ios-btn-danger" style="display: none;" onclick="startQuiz('wrong')">📕 立即订正错题</button>
+      <button class="ios-btn ios-btn-primary" onclick="exitToHome(event)">返回首页</button>
     </div>
   </div>
 </div>
@@ -1162,9 +1312,8 @@ let currentMode = 'all'; // 'all' | 'wrong'
 let activeQuestions = [];
 let currentIndex = 0;
 let answeredCurrent = false;
-let userAnswers = {}; // 记录当前轮次每题的作答状态
+let userAnswers = {};
 
-// 统计
 let sessionTotal = 0;
 let sessionCorrect = 0;
 let sessionWrong = 0;
@@ -1202,7 +1351,7 @@ function switchView(viewId) {
   document.getElementById(viewId).classList.add('active');
 }
 
-// 刷新首页错题状态：有错题时显示错题复习按钮，无错题（或全部订正后）按钮自动消失
+// 刷新首页错题按钮状态：有错题自动出现，订正后自动隐藏消失
 function refreshHomeStats() {
   const wrongIds = getWrongIds();
   const count = wrongIds.length;
@@ -1210,14 +1359,16 @@ function refreshHomeStats() {
   const reviewBtn = document.getElementById('btn-review-wrong');
 
   if (count === 0) {
-    headerCounter.textContent = '错题库: 0 题 (已全部掌握)';
-    headerCounter.style.color = 'var(--success)';
+    headerCounter.textContent = '错题库: 0 题';
+    headerCounter.style.background = 'var(--ios-green-tint)';
+    headerCounter.style.color = '#167932';
     reviewBtn.style.display = 'none';
   } else {
-    headerCounter.textContent = `待订正错题: ${count} 题`;
-    headerCounter.style.color = 'var(--danger)';
+    headerCounter.textContent = `待订正: ${count} 题`;
+    headerCounter.style.background = 'var(--ios-red-tint)';
+    headerCounter.style.color = 'var(--ios-red)';
     reviewBtn.style.display = 'flex';
-    reviewBtn.textContent = `📕 错题复习 (${count}题待订正)`;
+    reviewBtn.textContent = `📕 错题复习（${count} 题待订正）`;
   }
 }
 
@@ -1246,7 +1397,7 @@ function startQuiz(mode) {
 }
 
 function formatQuestionHtml(text) {
-  return text.replace(/（　　）/g, '<span class="blank-highlight">（　？　）</span>');
+  return text.replace(/（　　）/g, '<span class="blank-pill">（ 　 ）</span>');
 }
 
 function renderCurrentQuestion() {
@@ -1255,32 +1406,45 @@ function renderCurrentQuestion() {
   answeredCurrent = !!savedAnswer;
 
   document.getElementById('quiz-progress-text').textContent = `第 ${currentIndex + 1} / ${activeQuestions.length} 题`;
-  document.getElementById('quiz-mode-tag').textContent = currentMode === 'wrong' ? '错题订正模式' : '全章复习';
-  document.getElementById('quiz-mode-tag').style.background = currentMode === 'wrong' ? '#fee2e2' : '#eff6ff';
-  document.getElementById('quiz-mode-tag').style.color = currentMode === 'wrong' ? '#b91c1c' : '#1d4ed8';
+  const modeTag = document.getElementById('quiz-mode-tag');
+  if (currentMode === 'wrong') {
+    modeTag.textContent = '错题订正';
+    modeTag.style.background = 'var(--ios-red-tint)';
+    modeTag.style.color = 'var(--ios-red)';
+  } else {
+    modeTag.textContent = '全章复习';
+    modeTag.style.background = 'var(--ios-blue-tint)';
+    modeTag.style.color = 'var(--ios-blue)';
+  }
 
   const progressPercent = ((currentIndex + 1) / activeQuestions.length) * 100;
   document.getElementById('progress-bar-fill').style.width = `${progressPercent}%`;
 
   document.getElementById('quiz-type-tag').textContent = q.type;
-  document.getElementById('quiz-chapter-tag').textContent = `${q.chapter} · ${q.section}`;
-  document.getElementById('quiz-page-source').textContent = `教材第${q.page}页`;
+  document.getElementById('quiz-chapter-tag').textContent = q.section;
+  document.getElementById('quiz-page-source').textContent = `教材P${q.page}`;
 
   document.getElementById('question-text').innerHTML = `${currentIndex + 1}. ${formatQuestionHtml(q.question)}`;
 
-  // 底部按钮状态
   document.getElementById('btn-prev-q').disabled = (currentIndex === 0);
   document.getElementById('btn-next-q').textContent = (currentIndex === activeQuestions.length - 1) ? '查看结果' : '下一题';
 
-  // 渲染选项
+  // 渲染 Apple 风格圆标选项
   const optionsGroup = document.getElementById('options-group');
   optionsGroup.innerHTML = '';
   q.options.forEach((optText) => {
     const key = optText.trim()[0]; // 'A', 'B', 'C', 'D'
+    const pureText = optText.replace(/^[A-D]\.\s*/, '');
     const optDiv = document.createElement('div');
-    optDiv.className = 'option-item';
+    optDiv.className = 'option-row';
     optDiv.dataset.key = key;
-    optDiv.innerHTML = `<span>${optText}</span><span class="opt-icon"></span>`;
+    optDiv.innerHTML = `
+      <div class="option-left">
+        <span class="opt-letter">${key}</span>
+        <span class="opt-content">${pureText}</span>
+      </div>
+      <span class="opt-mark"></span>
+    `;
     optDiv.onclick = (e) => {
       e.stopPropagation();
       handleSelectOption(key);
@@ -1288,52 +1452,51 @@ function renderCurrentQuestion() {
     optionsGroup.appendChild(optDiv);
   });
 
-  // 隐藏或恢复反馈
   const feedback = document.getElementById('feedback-box');
-  feedback.style.display = 'none';
-  feedback.className = 'feedback-box';
-
   if (savedAnswer) {
     applyAnswerUI(q, savedAnswer.selectedKey, savedAnswer.isRight, savedAnswer.bookMsg);
+  } else {
+    feedback.className = 'feedback-panel placeholder';
+    feedback.innerHTML = '<span>👆 请直接点击选项作答，即刻显示解析</span>';
   }
 }
 
 function applyAnswerUI(q, selectedKey, isRight, bookMsg) {
-  const feedback = document.getElementById('feedback-box');
-  const feedbackHeader = document.getElementById('feedback-header');
-  const explainText = document.getElementById('explain-text');
-  const wrongBookTip = document.getElementById('wrong-book-tip');
-  const nextInlineBtn = document.getElementById('btn-next-inline');
-
-  document.querySelectorAll('.option-item').forEach(el => {
+  document.querySelectorAll('.option-row').forEach(el => {
     el.classList.add('locked');
     const key = el.dataset.key;
-    const iconSpan = el.querySelector('.opt-icon');
+    const markSpan = el.querySelector('.opt-mark');
     if (key === q.answer) {
       el.classList.add('correct-reveal');
-      iconSpan.textContent = '✓';
+      markSpan.textContent = '✓';
     }
     if (!isRight && key === selectedKey) {
       el.classList.add('wrong-selected');
-      iconSpan.textContent = '✗';
+      markSpan.textContent = '✕';
     }
   });
 
-  if (isRight) {
-    feedback.className = 'feedback-box correct';
-    feedbackHeader.innerHTML = `<span>✅ 回答正确！正确答案：${q.answer}（${q.correct_text}）</span>`;
-  } else {
-    feedback.className = 'feedback-box wrong';
-    feedbackHeader.innerHTML = `<span>❌ 回答错误！您选了 ${selectedKey}，正确答案：${q.answer}（${q.correct_text}）</span>`;
-  }
+  const feedback = document.getElementById('feedback-box');
+  feedback.className = isRight ? 'feedback-panel correct' : 'feedback-panel wrong';
 
-  explainText.innerHTML = `${q.explain}`;
-  wrongBookTip.textContent = bookMsg;
-  nextInlineBtn.textContent = currentIndex < activeQuestions.length - 1 ? '下一题 ➔' : '完成并看报告 ➔';
-  feedback.style.display = 'flex';
+  const statusHtml = isRight
+    ? `✅ 回答正确！答案：${q.answer}`
+    : `❌ 回答错误！正确答案：${q.answer}（您选了 ${selectedKey}）`;
+
+  const nextLabel = currentIndex < activeQuestions.length - 1 ? '下一题 ›' : '看报告 ›';
+
+  feedback.innerHTML = `
+    <div class="fb-top">
+      <span class="fb-status">${statusHtml}</span>
+    </div>
+    <div class="fb-explain">${q.explain}</div>
+    <div class="fb-bottom">
+      <span class="fb-note">${bookMsg}</span>
+      <button class="next-pill-btn" onclick="goToNext(event)">${nextLabel}</button>
+    </div>
+  `;
 }
 
-// 点击选项后立即判题并展示解析
 function handleSelectOption(selectedKey) {
   if (answeredCurrent) return;
   answeredCurrent = true;
@@ -1347,20 +1510,19 @@ function handleSelectOption(selectedKey) {
     if (currentMode === 'wrong') {
       removeWrongId(q.id);
       const rem = getWrongIds().length;
-      bookMsg = rem === 0 ? '🎉 已订正！错题库已全部清空！' : `✨ 已从错题库移除（剩余 ${rem} 题）`;
+      bookMsg = rem === 0 ? '🎉 已订正！错题库已清空' : `✨ 已移出错题库（余 ${rem} 题）`;
     } else {
-      // 如果在全章模式下做对了之前错过的题，也自动从错题库订正移除
       if (getWrongIds().includes(q.id)) {
         removeWrongId(q.id);
-        bookMsg = '✨ 本题已成功订正并移出错题库';
+        bookMsg = '✨ 本题已订正并移出错题库';
       } else {
-        bookMsg = '👍 掌握扎实，继续保持！';
+        bookMsg = '👍 掌握扎实，继续保持';
       }
     }
   } else {
     sessionWrong++;
     addWrongId(q.id);
-    bookMsg = '📌 已自动加入错题库，可在首页点击“错题复习”订正';
+    bookMsg = '📌 已自动加入错题库';
   }
 
   userAnswers[q.id] = { selectedKey, isRight, bookMsg };
@@ -1385,7 +1547,6 @@ function goToNext(e) {
   }
 }
 
-// 键盘快捷键支持：按 A/B/C/D 选择选项，按 Enter/Space/方向右键 进入下一题
 document.addEventListener('keydown', (e) => {
   const activeView = document.querySelector('.view.active');
   if (activeView && activeView.id === 'view-quiz') {
@@ -1419,13 +1580,13 @@ function showSummary() {
 
   if (remainingWrong === 0) {
     summaryMsg.textContent = '🎉 太棒了！所有错题已全部订正完毕！';
-    summaryMsg.style.color = 'var(--success)';
+    summaryMsg.style.color = 'var(--ios-green)';
     wrongBtn.style.display = 'none';
   } else {
-    summaryMsg.textContent = `还有 ${remainingWrong} 道错题待订正，加油攻克它们！`;
-    summaryMsg.style.color = 'var(--danger)';
+    summaryMsg.textContent = `还有 ${remainingWrong} 道错题待订正，加油攻克！`;
+    summaryMsg.style.color = 'var(--ios-red)';
     wrongBtn.style.display = 'flex';
-    wrongBtn.textContent = `📕 立即订正错题 (${remainingWrong}题)`;
+    wrongBtn.textContent = `📕 立即订正错题（${remainingWrong} 题）`;
   }
 }
 
